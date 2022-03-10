@@ -8,7 +8,7 @@ router.post(
     createCharge
 );
 
-router.get(
+router.post(
     '/:id/get',
     getChargeByUser
 );
