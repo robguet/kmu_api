@@ -21,10 +21,13 @@ const createCharge = async (req, res) => {
 
 const getChargeByUser = async (req, res) => {
     const { id } = req.params
+    const { startDate, endDate } = req.body;
 
-    const sql = `SELECT category, date, money, title, label, value FROM Charges left JOIN Users ON Charges.FK_idUser = Users.idUser left JOIN Cards ON Charges.idCard = Cards.idCard Where Charges.FK_idUser = ?`;
+    const sql = `SELECT category, date, money, title, label, value FROM Charges left JOIN Users ON Charges.FK_idUser = Users.idUser left JOIN Cards ON Charges.idCard = Cards.idCard
+    Where Charges.FK_idUser = ${id}
+    AND date BETWEEN '${startDate}' AND '${endDate}'`;
 
-    connection.query(sql, [id], function (err, result) {
+    connection.query(sql, function (err, result) {
         if (err) throw err;
         res.json({ ok: true, result })
     });
