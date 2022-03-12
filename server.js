@@ -28,10 +28,10 @@ class Server {
 
     async dbConnection() {
         const connection = mysql.createConnection({
-            host: 'sql3.freesqldatabase.com',
-            user: 'sql3476904',
-            password: 'kY31N971MR',
-            database: 'sql3476904',
+            host: 'bvzviiphehcohyml5sxm-mysql.services.clever-cloud.com',
+            user: 'u6r8rbnbfdqhaluw',
+            password: 'UngNk0XXjM7bNggibADG',
+            database: 'bvzviiphehcohyml5sxm',
             multipleStatements: true
         });
         connection.connect((err) => {
