@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createCharge, getChargeByUser } = require('../controllers/chargesController');
+const { createCharge, getChargeByUser, getChargesByCategory } = require('../controllers/chargesController');
 const router = Router();
 
 //CREAR NUEVO CARGO
@@ -11,6 +11,11 @@ router.post(
 router.post(
     '/:id/get',
     getChargeByUser
+);
+
+router.post(
+    '/:id/get/:category',
+    getChargesByCategory
 );
 
 module.exports = router;
