@@ -12,7 +12,7 @@ router.get(
 );
 
 router.post(
-    '/resgister',
+    '/register',
     autController.registrarse
 )
 

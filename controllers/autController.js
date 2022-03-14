@@ -24,17 +24,25 @@ const registrarse = async (req, res) => {
 
 
     const stmt = `INSERT INTO Users(name, budget, cutDate, email, password)  VALUES ?  `;
-    const todos = [
+    const values = [
         [name, budget, cutDate, email, hash],
     ];
 
-    connection.query(stmt, [todos], async (err, results, fields) => {
+
+    connection.query(stmt, [values], async (err, results, fields) => {
         if (err) {
             return console.error(err.message);
         }
+        const stmt2 = `INSERT INTO Users_Cards(label, value, FK_idUser, fk_idCard)  VALUES ('Efectivo', 'efectivo', '${results.insertId}', '3')  `;
 
-        const token = await generarJWT(results.insertId);
-        res.json({ ok: true, token, hash })
+        connection.query(stmt2, async (err, results2, fields) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            const token = await generarJWT(results.insertId);
+            res.json({ ok: true, token })
+        });
+
     });
 
 }
