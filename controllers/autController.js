@@ -77,7 +77,7 @@ const revalidarToken = async (req, res) => {
 
 
         var adr = uid;
-        var sql = 'SELECT idUser, name, email, budget, cutDate FROM Users WHERE idUser = ?; SELECT * FROM Users_Cards Where Users_Cards.FK_idUser = ?';
+        var sql = 'SELECT idUser, name, email, budget, cutDate, label, value FROM Users_Cards INNER JOIN Users on Users_Cards.FK_idUser = Users.idUser INNER JOIN Cards on Users_Cards.fk_idCard = Cards.idCard Where Users_Cards.FK_idUser = ?';
         connection.query(sql, [adr, adr], async function (err, result) {
             if (err) throw err;
 
@@ -85,7 +85,21 @@ const revalidarToken = async (req, res) => {
                 return res.json({ ok: false, message: "No se encontro ningun usuario", result: result.length })
             }
 
-            res.json({ ok: true, token, user: result[0], cards: result[1] });
+            [userInfor] = result
+            const { idUser, name, email, cutDate, budget } = userInfor
+            const user = {
+                idUser, name, email, cutDate, budget
+            }
+
+
+            const cards = result.map(data => {
+                return {
+                    value: data.value,
+                    label: data.label
+                }
+            })
+
+            res.json({ ok: true, token, user, cards });
 
         });
 
