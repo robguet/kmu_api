@@ -77,7 +77,7 @@ const revalidarToken = async (req, res) => {
 
 
         var adr = uid;
-        var sql = 'SELECT idUser, name, email, budget, cutDate, label, value FROM Users_Cards INNER JOIN Users on Users_Cards.FK_idUser = Users.idUser INNER JOIN Cards on Users_Cards.fk_idCard = Cards.idCard Where Users_Cards.FK_idUser = ?';
+        var sql = 'SELECT idUser, name, email, budget, cutDate, label, value, fk_idCard FROM Users_Cards INNER JOIN Users on Users_Cards.FK_idUser = Users.idUser INNER JOIN Cards on Users_Cards.fk_idCard = Cards.idCard Where Users_Cards.FK_idUser = ?';
         connection.query(sql, [adr, adr], async function (err, result) {
             if (err) throw err;
 
@@ -95,7 +95,8 @@ const revalidarToken = async (req, res) => {
             const cards = result.map(data => {
                 return {
                     value: data.value,
-                    label: data.label
+                    label: data.label,
+                    fk_idCard: data.fk_idCard
                 }
             })
 
