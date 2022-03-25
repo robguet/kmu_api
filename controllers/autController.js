@@ -57,7 +57,7 @@ const login = async (req, res) => {
         const validarPassword = bcrypt.compareSync(password, '$2a$10$hvwLPgpyAE5PaeSeEyURjOA2uESOureqFwr.B29wkQjJ1WZnsLGMi'); // true
 
         if (result.length < 1) {
-            return res.json({ ok: false, message: "No se encontro ningun usuario", result: result.length })
+            return res.json({ ok: false, message: "No se encontro ningun usuario", res: result.length })
         }
 
         if (!validarPassword) { return res.json({ ok: false, validarPassword, res }) }
