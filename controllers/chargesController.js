@@ -27,7 +27,8 @@ const getChargeByUser = async (req, res) => {
     left JOIN Cards ON Charges.idCard = Cards.idCard
     left JOIN Categories ON Charges.FK_idCategory = Categories.idCategory
     Where Charges.FK_idUser = ${id}
-    AND date BETWEEN '${startDate}' AND '${endDate}'`;
+    AND date BETWEEN '${startDate}' AND '${endDate}'
+    ORDER BY date DESC`;
 
     connection.query(sql, function (err, result) {
         if (err) throw err;
