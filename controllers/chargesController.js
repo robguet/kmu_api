@@ -50,9 +50,6 @@ const getChargesByCategory = async (req, res) => {
 const getChargesByCards = async (req, res) => {
     const { id } = req.params
     const { startDate, endDate } = req.body;
-    console.log(id)
-
-
 
     const sql = `SELECT money, label, value FROM Charges 
     left JOIN Cards ON Charges.idCard = Cards.idCard
@@ -65,9 +62,19 @@ const getChargesByCards = async (req, res) => {
     });
 }
 
+const getListCharges = (req, res) => {
+    const sql = 'SELECT * FROM Categories'
+
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        res.json({ ok: true, result })
+    });
+}
+
 module.exports = {
     getChargeByUser,
     createCharge,
     getChargesByCategory,
-    getChargesByCards
+    getChargesByCards,
+    getListCharges
 };
