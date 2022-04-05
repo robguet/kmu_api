@@ -2,7 +2,7 @@ const { connection } = require('../server');
 
 const createCharge = async (req, res) => {
 
-    const { idCard, category, date, money, title, idUser, FK_idCategory } = req.body;
+    const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
     const newDate = new Date(date)
 
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
@@ -44,7 +44,7 @@ const getChargesByCategory = async (req, res) => {
     left JOIN Users ON Charges.FK_idUser = Users.idUser left JOIN Cards ON Charges.idCard = Cards.idCard
     left JOIN Categories ON Charges.FK_idCategory = Categories.idCategory
     Where Charges.FK_idUser = ${id}
-    AND category = '${category}'
+    AND FK_idCategory = '${category}'
     AND date BETWEEN '${startDate}' AND '${endDate}'
     ORDER BY date DESC`;
 
