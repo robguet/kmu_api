@@ -2,12 +2,12 @@ const { connection } = require('../server');
 
 const createCharge = async (req, res) => {
 
-    const { idCard, category, date, money, title, idUser } = req.body;
+    const { idCard, category, date, money, title, idUser, FK_idCategory } = req.body;
     const newDate = new Date(date)
 
-    const stmt = `INSERT INTO Charges(idCard, category, date, money, title, FK_idUser)  VALUES ?  `;
+    const stmt = `INSERT INTO Charges(idCard, category, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
     const todos = [
-        [idCard, category, newDate, money, title, idUser],
+        [idCard, category, newDate, money, title, idUser, FK_idCategory],
     ];
 
     connection.query(stmt, [todos], async (err, results, fields) => {
