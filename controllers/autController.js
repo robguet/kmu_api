@@ -78,7 +78,7 @@ const newToken = async (req, res) => {
 
         var adr = uid;
         var sql = 'SELECT idUser, name, email, budget, cutDate, label, value, investmentLimit, fk_idCard FROM Users_Cards INNER JOIN Users on Users_Cards.FK_idUser = Users.idUser INNER JOIN Cards on Users_Cards.fk_idCard = Cards.idCard Where Users_Cards.FK_idUser = ?';
-        connection.query(sql, [adr, adr], async function (err, result) {
+        connection.query(sql, [adr], async function (err, result) {
             if (err) throw err;
 
             if (result.length < 1) {
@@ -86,9 +86,9 @@ const newToken = async (req, res) => {
             }
 
             [userInfor] = result
-            const { idUser, name, email, cutDate, budget } = userInfor
+            const { idUser, name, email, cutDate, budget, investmentLimit } = userInfor
             const user = {
-                idUser, name, email, cutDate, budget
+                idUser, name, email, cutDate, budget, investmentLimit
             }
 
 
