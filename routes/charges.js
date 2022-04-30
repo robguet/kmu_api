@@ -2,7 +2,6 @@ const { Router } = require('express');
 const { createCharge, getChargeByUser, getChargesByCategory, getChargesByCards, getListCharges } = require('../controllers/chargesController');
 const router = Router();
 
-//CREAR NUEVO CARGO
 router.post(
     '/new',
     createCharge
