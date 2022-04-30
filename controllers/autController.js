@@ -100,7 +100,9 @@ const newToken = async (req, res) => {
                 }
             })
 
-            res.json({ ok: true, token, user, cards });
+            user.cards = cards
+
+            res.json({ ok: true, token, user });
 
         });
 
