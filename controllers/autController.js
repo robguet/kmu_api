@@ -100,7 +100,7 @@ const revalidarToken = async (req, res) => {
                 }
             })
 
-            user = { ...user, cards }
+            user.cards = cards
 
             res.json({ ok: true, token, user });
 
