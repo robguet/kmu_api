@@ -100,7 +100,9 @@ const revalidarToken = async (req, res) => {
                 }
             })
 
-            res.json({ ok: true, token, user, cards });
+            user = { ...user, cards }
+
+            res.json({ ok: true, token, user });
 
         });
 
