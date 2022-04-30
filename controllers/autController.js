@@ -17,7 +17,7 @@ const query = async (req, res) => {
 
 }
 
-const registrarse = async (req, res) => {
+const signUp = async (req, res) => {
     const { name, budget, cutDate, email, password } = req.body;
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt);
@@ -29,13 +29,13 @@ const registrarse = async (req, res) => {
     ];
 
 
-    connection.query(stmt, [values], async (err, results, fields) => {
+    connection.query(stmt, [values], async (err, results) => {
         if (err) {
             return console.error(err.message);
         }
         const stmt2 = `INSERT INTO Users_Cards(label, value, FK_idUser, fk_idCard)  VALUES ('Efectivo', 'efectivo', '${results.insertId}', '3')  `;
 
-        connection.query(stmt2, async (err, results2, fields) => {
+        connection.query(stmt2, async (err) => {
             if (err) {
                 return console.error(err.message);
             }
@@ -47,7 +47,7 @@ const registrarse = async (req, res) => {
 
 }
 
-const login = async (req, res) => {
+const signIn = async (req, res) => {
     const { email, password } = req.body;
     var adr = email;
     var sql = 'SELECT * FROM Users WHERE email = ?';
@@ -68,7 +68,7 @@ const login = async (req, res) => {
     });
 }
 
-const revalidarToken = async (req, res) => {
+const newToken = async (req, res) => {
     const uid = req.uid;
 
     try {
@@ -115,7 +115,7 @@ const revalidarToken = async (req, res) => {
 
 module.exports = {
     query,
-    registrarse,
-    login,
-    revalidarToken
+    signIn,
+    signUp,
+    newToken
 };

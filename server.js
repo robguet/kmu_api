@@ -10,19 +10,19 @@ class Server {
         this.app = express();
         this.port = 8080;
 
-        //conectar db
+        //?CONNECT DB
         this.dbConnection();
 
-        //http server
+        //?HTTP SERVER
         this.server = http.createServer(this.app);
     }
 
     execute() {
-        //init server
+        //?INIT SERVER
         this.server.listen(this.port, () => {
             console.log('corriendo servidor');
         });
-        // init middlewares
+        //?INIT MIDDLEWARES
         this.middlewares();
     }
 
@@ -38,10 +38,6 @@ class Server {
             if (err) throw err;
             console.log('Connected!');
         });
-
-        // connection.end((err) => {
-
-        // });
 
         module.exports = {
             connection
