@@ -5,11 +5,6 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const autController = require('../controllers/autController');
 const router = Router();
 
-router.get(
-    '/ok',
-    autController.query
-);
-
 router.post(
     '/register',
     autController.signUp
@@ -22,5 +17,6 @@ router.post(
 
 router.get('/newToken', validarJWT, autController.newToken);
 
+router.post('/update/user/:id', autController.update);
 
 module.exports = router;

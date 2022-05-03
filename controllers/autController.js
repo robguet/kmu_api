@@ -28,7 +28,6 @@ const signUp = async (req, res) => {
         [name, budget, cutDate, email, hash],
     ];
 
-
     connection.query(stmt, [values], async (err, results) => {
         if (err) {
             return console.error(err.message);
@@ -70,6 +69,7 @@ const signIn = async (req, res) => {
 
 const newToken = async (req, res) => {
     const uid = req.uid;
+    console.log(uid)
 
     try {
         //generar un nuevo token
@@ -111,11 +111,52 @@ const newToken = async (req, res) => {
     }
 }
 
+const update = (req, res) => {
 
+    const { name, email, cutDate, budget, investmentLimit, cards } = req.body
+    const { id } = req.params
+
+    const stmt = 'UPDATE Users SET name = ?, email = ?, cutDate = ?, budget = ?, investmentLimit = ? WHERE idUser = ?'
+
+    connection.query(stmt, [name, email, cutDate, budget, investmentLimit, id], async (err) => {
+        if (err) {
+            return res.json({ ok: false, error: err.message });
+        }
+
+        connection.query('DELETE FROM Users_Cards WHERE FK_idUser = ? AND fk_idCard!=3', [id], function (error) {
+            if (error) {
+                return res.json({ ok: false, error: error.message });
+
+            };
+
+            const cardsWithEfectivo = cards.filter(card => {
+                return card.fk_idCard !== 3
+            })
+
+            const cardsWithoutEfectivo = cardsWithEfectivo.map(card => {
+                return [id, card.fk_idCard]
+            })
+
+            connection.query('INSERT INTO Users_Cards (FK_idUser, fk_idCard) VALUES ?', [cardsWithoutEfectivo], function (error, results, fields) {
+                if (error) {
+                    return res.json({ ok: false, error: error.message });
+                }
+
+                res.json({ ok: true, results })
+            })
+        })
+    });
+
+
+
+
+
+}
 
 module.exports = {
     query,
     signIn,
     signUp,
-    newToken
+    newToken,
+    update
 };

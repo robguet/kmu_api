@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createCharge, getChargeByUser, getChargesByCategory, getChargesByCards, getListCharges } = require('../controllers/chargesController');
+const { createCharge, getChargeByUser, getChargesByCategory, getChargesByCards, getListCharges, update } = require('../controllers/chargesController');
 const router = Router();
 
 router.post(
