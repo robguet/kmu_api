@@ -84,5 +84,5 @@ module.exports = {
     getChargeByUser,
     getChargesByCategory,
     getChargesByCards,
-    getListCharges
+    getListCharges,
 };
