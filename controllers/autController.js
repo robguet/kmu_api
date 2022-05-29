@@ -32,7 +32,7 @@ const signUp = async (req, res) => {
         if (err) {
             return console.error(err.message);
         }
-        const stmt2 = `INSERT INTO Users_Cards(label, value, FK_idUser, fk_idCard)  VALUES ('Efectivo', 'efectivo', '${results.insertId}', '3')  `;
+        const stmt2 = `INSERT INTO Users_Cards(FK_idUser, fk_idCard)  VALUES ('${results.insertId}', '3')  `;
 
         connection.query(stmt2, async (err) => {
             if (err) {
