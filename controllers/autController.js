@@ -47,6 +47,7 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res) => {
+    console.log(req.body)
     const { email, password } = req.body;
     var adr = email;
     var sql = 'SELECT * FROM Users WHERE email = ?';
