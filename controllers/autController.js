@@ -47,14 +47,16 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res) => {
-    console.log(req.body)
     const { email, password } = req.body;
     var adr = email;
     var sql = 'SELECT * FROM Users WHERE email = ?';
     connection.query(sql, [adr], async function (err, result) {
-        if (err) throw err;
-
-        const validarPassword = bcrypt.compareSync(password, '$2a$10$hvwLPgpyAE5PaeSeEyURjOA2uESOureqFwr.B29wkQjJ1WZnsLGMi'); // true
+        if (err) {
+            console.log(error)
+            throw err;
+        }
+        const user = result[0];
+        const validarPassword = bcrypt.compareSync(password, user.password);
 
         if (result.length < 1) {
             return res.json({ ok: false, message: "No se encontro ningun usuario", res: result.length })
