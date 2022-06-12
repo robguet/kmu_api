@@ -53,19 +53,21 @@ const signIn = async (req, res) => {
     connection.query(sql, [adr], async function (err, result) {
         if (err) {
             console.log(error)
-            throw err;
+            return res.status(500).json({ error })
         }
         const user = result[0];
-        const validarPassword = bcrypt.compareSync(password, user.password);
 
         if (result.length < 1) {
-            return res.json({ ok: false, message: "No se encontro ningun usuario", res: result.length })
+            return res.status(500).json({ ok: false, message: "No se encontro ningun usuario" })
+        }
+        const validarPassword = bcrypt.compareSync(password, user.password);
+
+        if (!validarPassword) {
+            return res.status(500).json({ ok: false, validarPassword, message:'Constraseña no valida' })
         }
 
-        if (!validarPassword) { return res.json({ ok: false, validarPassword, res }) }
-
         const token = await generarJWT(result[0].idUser);
-        res.json({ validarPassword, ok: true, token })
+        res.status(200).json({ validarPassword, ok: true, token })
 
     });
 }
@@ -81,11 +83,13 @@ const newToken = async (req, res) => {
 
         var adr = uid;
         var sql = 'SELECT idUser, name, email, budget, cutDate, label, value, investmentLimit, fk_idCard FROM Users_Cards INNER JOIN Users on Users_Cards.FK_idUser = Users.idUser INNER JOIN Cards on Users_Cards.fk_idCard = Cards.idCard Where Users_Cards.FK_idUser = ?';
-        connection.query(sql, [adr], async function (err, result) {
-            if (err) throw err;
+        connection.query(sql, [adr], async function (error, result) {
+            if (error) {
+                return res.status(500).json({ error })
+            }
 
             if (result.length < 1) {
-                return res.json({ ok: false, message: "No se encontro ningun usuario", result: result.length })
+                return res.status(500).json({ ok: false, message: "No se encontro ningun usuario", result: result.length })
             }
 
             [userInfor] = result
@@ -105,12 +109,12 @@ const newToken = async (req, res) => {
 
             user.cards = cards
 
-            res.json({ ok: true, token, user });
+            res.status(200).json({ ok: true, token, user });
 
         });
 
     } catch (error) {
-        res.json({ error: true })
+        return res.status(500).json({ error: true })
     }
 }
 
@@ -123,12 +127,12 @@ const update = (req, res) => {
 
     connection.query(stmt, [name, email, cutDate, budget, investmentLimit, id], async (err) => {
         if (err) {
-            return res.json({ ok: false, error: err.message });
+            return res.status(500).json({ ok: false, error: err.message });
         }
 
         connection.query('DELETE FROM Users_Cards WHERE FK_idUser = ? AND fk_idCard!=3', [id], function (error) {
             if (error) {
-                return res.json({ ok: false, error: error.message });
+                return res.status(500).json({ ok: false, error: error.message });
 
             };
 
@@ -142,10 +146,10 @@ const update = (req, res) => {
 
             connection.query('INSERT INTO Users_Cards (FK_idUser, fk_idCard) VALUES ?', [cardsWithoutEfectivo], function (error, results, fields) {
                 if (error) {
-                    return res.json({ ok: false, error: error.message });
+                    res.status(200).json({ ok: false, error: error.message });
                 }
 
-                res.json({ ok: true, results })
+                res.status(200).json({ ok: true, results })
             })
         })
     });
