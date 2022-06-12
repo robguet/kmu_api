@@ -10,11 +10,12 @@ const createCharge = async (req, res) => {
         [idCard, newDate, money, title, idUser, FK_idCategory],
     ];
 
-    connection.query(stmt, [todos], async (err, results, fields) => {
-        if (err) {
-            return console.error(err.message);
+    connection.query(stmt, [todos], async (error, results, fields) => {
+        if (error) {
+            console.error(err.message);
+            return res.status(500).json({ error })
         }
-        res.json({ ok: true, results })
+        res.status(200).json({ ok: true, results })
     });
 }
 
@@ -31,8 +32,10 @@ const getChargeByUser = async (req, res) => {
     ORDER BY date DESC`;
 
     connection.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json({ ok: true, result })
+        if (err) {
+            return res.status(500).json({ err })
+        }
+        res.status(200).json({ ok: true, result })
     });
 }
 
@@ -49,8 +52,10 @@ const getChargesByCategory = async (req, res) => {
     ORDER BY date DESC`;
 
     connection.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json({ ok: true, result })
+        if (err) {
+            return res.status(500).json({ err })
+        }
+        res.status(200).json({ ok: true, result })
     });
 }
 
@@ -65,8 +70,10 @@ const getChargesByCards = async (req, res) => {
     ORDER BY date DESC`;
 
     connection.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json({ ok: true, result })
+        if (err) {
+            return res.status(500).json({ err })
+        }
+        res.status(200).json({ ok: true, result })
     });
 }
 
@@ -74,8 +81,10 @@ const getListCharges = (req, res) => {
     const sql = 'SELECT * FROM Categories'
 
     connection.query(sql, function (err, result) {
-        if (err) throw err;
-        res.json({ ok: true, result })
+        if (err) {
+            return res.status(500).json({ err })
+        }
+        res.status(200).json({ ok: true, result })
     });
 }
 
