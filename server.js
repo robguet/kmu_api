@@ -51,14 +51,11 @@ class Server {
 
         this.app.use(cors());
 
-        app.use(express.json({ extended: true }));
         app.use(bodyParser.urlencoded({
             extended: true
         }));
 
-        app.use(bodyParser.json())
-
-
+        app.use(express.json({ extended: true }));
 
         this.app.get('/', (req, res) => {
             res.send('Hola Mundo');
