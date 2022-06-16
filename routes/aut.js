@@ -15,6 +15,11 @@ router.post(
     autController.signIn
 )
 
+router.get(
+    '/',
+    autController.query
+)
+
 router.get('/newToken', validarJWT, autController.newToken);
 
 router.post('/update/user/:id', autController.update);
