@@ -18,10 +18,6 @@ class Server {
     }
 
     execute() {
-        //?INIT SERVER
-        this.app.listen(4000, '0.0.0.0', () => {
-            console.log('corriendo servidor', this.port);
-        });
         //?INIT MIDDLEWARES
         this.middlewares();
     }
@@ -51,12 +47,17 @@ class Server {
 
         this.app.use(express.json());
 
+
         this.app.get('/', (req, res) => {
             res.send('Hola Mundo');
         });
         this.app.use('/aut', require('./routes/aut'));
         this.app.use('/charges', require('./routes/charges'));
 
+        //?INIT SERVER
+        this.app.listen(4000, '0.0.0.0', () => {
+            console.log('corriendo servidor', this.port);
+        });
 
     }
 }
