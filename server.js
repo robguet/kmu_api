@@ -8,7 +8,7 @@ const mysql = require('mysql');
 class Server {
     constructor() {
         this.app = express();
-        this.port = 8080;
+        this.port = 4000;
 
         //?CONNECT DB
         this.dbConnection();
@@ -20,7 +20,7 @@ class Server {
     execute() {
         //?INIT SERVER
         this.server.listen(this.port, () => {
-            console.log('corriendo servidor');
+            console.log('corriendo servidor', this.port);
         });
         //?INIT MIDDLEWARES
         this.middlewares();
