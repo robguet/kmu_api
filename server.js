@@ -8,7 +8,7 @@ const mysql = require('mysql');
 class Server {
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || 5000;
+        this.port = process.env.PORT || 4000;
 
         //?CONNECT DB
         this.dbConnection();
@@ -18,6 +18,11 @@ class Server {
     }
 
     execute() {
+        //?INIT SERVER
+        this.app.listen(this.port, '0.0.0.0', () => {
+            console.log('corriendo servidor', this.port);
+        });
+
         //?INIT MIDDLEWARES
         this.middlewares();
     }
@@ -54,10 +59,6 @@ class Server {
         this.app.use('/aut', require('./routes/aut'));
         this.app.use('/charges', require('./routes/charges'));
 
-        //?INIT SERVER
-        this.app.listen(this.port, '0.0.0.0', () => {
-            console.log('corriendo servidor', this.port);
-        });
 
     }
 }
