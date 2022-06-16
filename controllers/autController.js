@@ -10,7 +10,7 @@ const query = async (req, res) => {
             throw err;
         }
         console.log(rows)
-        res.json({ rows })
+        res.send('Hola Mundo')
 
     });
 
@@ -63,7 +63,7 @@ const signIn = async (req, res) => {
         const validarPassword = bcrypt.compareSync(password, user.password);
 
         if (!validarPassword) {
-            return res.status(500).json({ ok: false, validarPassword, message:'Constraseña no valida' })
+            return res.status(500).json({ ok: false, validarPassword, message: 'Constraseña no valida' })
         }
 
         const token = await generarJWT(result[0].idUser);

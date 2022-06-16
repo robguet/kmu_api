@@ -19,7 +19,7 @@ class Server {
 
     execute() {
         //?INIT SERVER
-        this.server.listen(this.port, () => {
+        this.server.listen(this.port, '0.0.0.0', () => {
             console.log('corriendo servidor', this.port);
         });
         //?INIT MIDDLEWARES
@@ -51,6 +51,9 @@ class Server {
 
         this.app.use(express.json());
 
+        this.app.get('/', (req, res) => {
+            res.send('Hola Mundo');
+        });
         this.app.use('/aut', require('./routes/aut'));
         this.app.use('/charges', require('./routes/charges'));
 
