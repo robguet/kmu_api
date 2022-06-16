@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const cors = require('cors');
 const mysql = require('mysql');
+const bodyParser = require('body-parser')
 
 
 class Server {
@@ -50,7 +51,13 @@ class Server {
 
         this.app.use(cors());
 
-        this.app.use(express.json());
+        app.use(express.json({ extended: true }));
+        app.use(bodyParser.urlencoded({
+            extended: true
+        }));
+
+        app.use(bodyParser.json())
+
 
 
         this.app.get('/', (req, res) => {
