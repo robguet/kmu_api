@@ -8,7 +8,7 @@ const mysql = require('mysql');
 class Server {
     constructor() {
         this.app = express();
-        this.port = 4000;
+        this.port = process.env.PORT || 5000;
 
         //?CONNECT DB
         this.dbConnection();
@@ -55,7 +55,7 @@ class Server {
         this.app.use('/charges', require('./routes/charges'));
 
         //?INIT SERVER
-        this.app.listen(4000, '0.0.0.0', () => {
+        this.app.listen(this.port, '0.0.0.0', () => {
             console.log('corriendo servidor', this.port);
         });
 
