@@ -19,7 +19,7 @@ class Server {
 
     execute() {
         //?INIT SERVER
-        this.server.listen(this.port, '0.0.0.0', () => {
+        this.app.listen(4000, '0.0.0.0', () => {
             console.log('corriendo servidor', this.port);
         });
         //?INIT MIDDLEWARES
