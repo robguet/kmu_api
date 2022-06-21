@@ -1,5 +1,5 @@
 const { generarJWT } = require('../helper/jwt');
-const { connection } = require('../server');
+const { connection } = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 
@@ -10,7 +10,7 @@ const query = async (req, res) => {
             throw err;
         }
         console.log(rows)
-        res.send('Hola Mundo')
+        res.send('Hola Adios')
 
     });
 

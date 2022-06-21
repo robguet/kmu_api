@@ -1,4 +1,4 @@
-const { connection } = require('../server');
+const { connection } = require('../config/db');
 
 const createCharge = async (req, res) => {
 
