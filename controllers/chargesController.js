@@ -1,6 +1,7 @@
 const { connection } = require('../config/db');
 
 const createCharge = async (req, res) => {
+    console.log(req.body)
 
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
     const newDate = new Date(date)
@@ -12,9 +13,12 @@ const createCharge = async (req, res) => {
 
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
+            console.log(error)
             console.error(err.message);
             return res.status(500).json({ error })
         }
+        console.log(results)
+
         res.status(200).json({ ok: true, results })
     });
 }
