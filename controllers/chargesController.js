@@ -10,6 +10,7 @@ const createCharge = async (req, res) => {
     const todos = [
         [idCard, newDate, money, title, idUser, FK_idCategory],
     ];
+    console.log(todos, 'todos')
 
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
