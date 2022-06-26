@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('./config/db')
+const cron = require('node-cron');
 
 //crear el servidor
 const app = express();
@@ -25,6 +26,9 @@ app.get('/', (req, res) => {
 app.use('/aut', require('./routes/aut'));
 app.use('/charges', require('./routes/charges'));
 
+cron.schedule('* * * * *', () => {
+    console.log('running a task every minute');
+});
 //arrancar la app
 app.listen(PORT, '0.0.0.0', () => {
     // `http server Corriendo desde el puerto ${PORT}`);
