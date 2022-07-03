@@ -15,7 +15,6 @@ const createCharge = async (req, res) => {
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
             console.log(error)
-            console.error(err.message);
             return res.status(500).json({ error })
         }
         console.log(results)
