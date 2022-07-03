@@ -1,17 +1,17 @@
 const { connection } = require('../config/db');
 
 const createCharge = async (req, res) => {
-    console.log(req.body)
+
 
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
     const newDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
-
-
+    
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
     const todos = [
         [idCard, newDate, money, title, idUser, FK_idCategory],
     ];
-    console.log(todos, 'todos')
+    console.log(newDate)
+
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
             console.log(error)
