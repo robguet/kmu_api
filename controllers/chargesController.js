@@ -1,16 +1,18 @@
 const { connection } = require('../config/db');
+const moment = require('moment');
 
 const createCharge = async (req, res) => {
 
 
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
- // const baseDate = new Date(date) //.toISOString().slice(0, 19).replace('T', ' ');
-    // const realDate = `${baseDate.getFullYear()}-${baseDate.getMonth() + 1 }-${baseDate.getDate()}`
+    const d = new Date(date);
+    const formatDate = moment(d).format('YYYY-MM-DD'); // June 1, 2019
+
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
     const todos = [
-        [idCard, date, money, title, idUser, FK_idCategory],
+        [idCard, formatDate, money, title, idUser, FK_idCategory],
     ];
-    console.log(date, 'robert');
+    console.log(formatDate, 'NEW FORMAT');
 
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
