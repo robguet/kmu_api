@@ -4,13 +4,13 @@ const createCharge = async (req, res) => {
 
 
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
-    const newDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
-    
+    const baseDate = new Date(date) //.toISOString().slice(0, 19).replace('T', ' ');
+    const newDate = `${baseDate.getFullYear()}-${baseDate.getMonth()}-${baseDate.getDay()}`
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
     const todos = [
         [idCard, newDate, money, title, idUser, FK_idCategory],
     ];
-    console.log(newDate)
+    console.log(newDate, 'makibg')
 
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
