@@ -9,7 +9,12 @@ const dbConnection = async () => {
         multipleStatements: true
     });
     connection.connect((err) => {
-        if (err) throw err;
+        if (err) {
+            console.log('err')
+            console.log(err)
+            dbConnection()
+            // throw err;
+        }
         console.log('Connected!');
     });
 

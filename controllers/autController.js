@@ -1,7 +1,7 @@
 const { generarJWT } = require('../helper/jwt');
 const { connection } = require('../config/db');
 const bcrypt = require('bcryptjs');
-
+const { dbConnection } = require('../config/db')
 
 const query = async (req, res) => {
 
@@ -15,6 +15,10 @@ const query = async (req, res) => {
     });
 
 
+}
+
+const startServer = async(req, res) =>{
+    res.json({ started: true})
 }
 
 const signUp = async (req, res) => {
@@ -165,5 +169,6 @@ module.exports = {
     signIn,
     signUp,
     newToken,
-    update
+    update,
+    startServer
 };

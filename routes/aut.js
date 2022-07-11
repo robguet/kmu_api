@@ -24,4 +24,6 @@ router.get('/newToken', validarJWT, autController.newToken);
 
 router.post('/update/user/:id', autController.update);
 
+router.get('/startServer', autController.startServer);
+
 module.exports = router;
