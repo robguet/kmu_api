@@ -8,13 +8,14 @@ const createCharge = async (req, res) => {
     const d = new Date(date);
 
     const timestamp = d.getTime();
+    const toSQL = timestamp / 1000
     const formatDate = moment(d).format('YYYY-MM-DD'); // June 1, 2019
     console.log(formatDate, 'NEW FORMAT');
     console.log(timestamp, 'timestamp');
 
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory, dateCharge)  VALUES ?  `;
     const todos = [
-        [idCard, formatDate, money, title, idUser, FK_idCategory, timestamp],
+        [idCard, formatDate, money, title, idUser, FK_idCategory, toSQL],
     ];
 
     connection.query(stmt, [todos], async (error, results, fields) => {
