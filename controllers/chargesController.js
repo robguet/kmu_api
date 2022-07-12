@@ -2,20 +2,18 @@ const { connection } = require('../config/db');
 const moment = require('moment');
 
 const createCharge = async (req, res) => {
-
-
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
-    const d = new Date(date);
+    const d = new Date(date).getTime()
+    console.log(d)
 
-    const timestamp = d.getTime();
-    const toSQL = timestamp / 1000
-    const formatDate = moment(d).format('YYYY-MM-DD'); // June 1, 2019
+    const formatDate = moment(d).format('YYYY-MM-DD');
     console.log(formatDate, 'NEW FORMAT');
-    console.log(timestamp, 'timestamp');
+    const dateTime = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
+
 
     const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory, dateCharge)  VALUES ?  `;
     const todos = [
-        [idCard, formatDate, money, title, idUser, FK_idCategory, toSQL],
+        [idCard, formatDate, money, title, idUser, FK_idCategory, dateTime],
     ];
 
     connection.query(stmt, [todos], async (error, results, fields) => {
@@ -32,6 +30,7 @@ const createCharge = async (req, res) => {
 const getChargeByUser = async (req, res) => {
     const { id } = req.params
     const { startDate, endDate } = req.body;
+    console.log(startDate)
 
     const sql = `SELECT date, money, title, Cards.label as method, Cards.value, Categories.color, Categories.label, icon FROM Charges 
     left JOIN Users ON Charges.FK_idUser = Users.idUser 
