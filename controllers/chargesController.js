@@ -6,13 +6,16 @@ const createCharge = async (req, res) => {
 
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
     const d = new Date(date);
-    const formatDate = moment(d).format('YYYY-MM-DD'); // June 1, 2019
 
-    const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory)  VALUES ?  `;
-    const todos = [
-        [idCard, formatDate, money, title, idUser, FK_idCategory],
-    ];
+    const timestamp = d.getTime();
+    const formatDate = moment(d).format('YYYY-MM-DD'); // June 1, 2019
     console.log(formatDate, 'NEW FORMAT');
+    console.log(timestamp, 'timestamp');
+
+    const stmt = `INSERT INTO Charges(idCard, date, money, title, FK_idUser, FK_idCategory, dateCharge)  VALUES ?  `;
+    const todos = [
+        [idCard, formatDate, money, title, idUser, FK_idCategory, timestamp],
+    ];
 
     connection.query(stmt, [todos], async (error, results, fields) => {
         if (error) {
