@@ -3,8 +3,8 @@ const moment = require('moment');
 
 const createCharge = async (req, res) => {
     const { idCard, date, money, title, idUser, FK_idCategory } = req.body;
-    const d = new Date(date).getTime()
-    console.log(d)
+    const d = new Date(date).getTime();
+    console.log(d);
 
     const formatDate = moment(d).format('YYYY-MM-DD');
     console.log(formatDate, 'NEW FORMAT');
@@ -23,7 +23,7 @@ const createCharge = async (req, res) => {
         }
         console.log(results)
 
-        res.status(200).json({ ok: true, results })
+        res.status(200).json({ ok: true, formatDate })
     });
 }
 
